@@ -1,0 +1,107 @@
+job_id,skill_id,min_proficiency
+J001,S001,2
+J001,S002,2
+J001,S006,3
+J001,S007,3
+J002,S001,3
+J002,S002,3
+J002,S003,3
+J002,S006,4
+J002,S007,4
+J003,S001,4
+J003,S002,4
+J003,S003,4
+J003,S006,4
+J003,S007,4
+J003,S008,4
+J004,S001,4
+J004,S002,5
+J004,S006,5
+J004,S007,5
+J004,S011,4
+J004,S012,4
+J005,S002,5
+J005,S006,5
+J005,S011,5
+J005,S012,5
+J005,S013,5
+J005,S015,5
+
+# INSTRUKSI PENGISIAN:
+#
+# KOLOM WAJIB (Required):
+# - job_id: ID jabatan (harus sama dengan di TEMPLATE_JOB_POSITIONS.csv)
+# - skill_id: ID skill yang dibutuhkan (harus sama dengan di TEMPLATE_SKILLS.csv)
+# - min_proficiency: Minimum proficiency yang dibutuhkan (1-5)
+#
+# MIN PROFICIENCY GUIDELINES:
+# - 1: Basic knowledge required
+# - 2: Elementary proficiency required
+# - 3: Intermediate proficiency required
+# - 4: Advanced proficiency required
+# - 5: Expert level required
+#
+# PANDUAN PER LEVEL JABATAN:
+#
+# Junior Level:
+# - 5-8 skills required
+# - Min proficiency: mostly 2-3
+# - Focus: basic technical + soft skills
+#
+# Mid Level:
+# - 8-10 skills required
+# - Min proficiency: mostly 3-4
+# - Focus: intermediate technical + soft skills
+#
+# Senior Level:
+# - 10-12 skills required
+# - Min proficiency: mostly 4
+# - Focus: advanced technical + some leadership
+#
+# Supervisor Level:
+# - 12-14 skills required
+# - Min proficiency: mostly 4-5
+# - Focus: advanced technical + leadership skills
+#
+# Manager Level:
+# - 14-16 skills required
+# - Min proficiency: mostly 4-5
+# - Focus: leadership + strategic skills
+#
+# CONTOH MAPPING:
+#
+# IT Junior Staff:
+# - Python (2), Data Analysis (2)
+# - Communication (3), Teamwork (3)
+#
+# IT Staff:
+# - Python (3), Data Analysis (3), SQL (3)
+# - Communication (4), Teamwork (4)
+#
+# IT Senior Staff:
+# - Python (4), Data Analysis (4), SQL (4)
+# - Communication (4), Teamwork (4), Problem Solving (4)
+#
+# IT Supervisor:
+# - Python (4), Data Analysis (5)
+# - Communication (5), Teamwork (5)
+# - Team Leadership (4), Project Management (4)
+#
+# IT Manager:
+# - Data Analysis (5)
+# - Communication (5)
+# - Team Leadership (5), Strategic Thinking (5)
+# - Decision Making (5), Project Management (5)
+#
+# TIPS:
+# 1. Setiap jabatan minimal butuh 5 skills
+# 2. Semakin tinggi level, semakin tinggi min proficiency
+# 3. Manager level fokus ke leadership skills
+# 4. Technical skills penting untuk technical positions
+# 5. Soft skills penting untuk semua positions
+#
+# CARA VALIDASI:
+# - Pastikan semua job_id ada di TEMPLATE_JOB_POSITIONS.csv
+# - Pastikan semua skill_id ada di TEMPLATE_SKILLS.csv
+# - Min proficiency harus 1-5
+# - Setiap job minimal punya 5 required skills

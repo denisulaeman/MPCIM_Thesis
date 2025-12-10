@@ -1,0 +1,70 @@
+employee_id,skill_id,proficiency
+EMP001,S001,4
+EMP001,S002,5
+EMP001,S003,3
+EMP001,S006,4
+EMP001,S007,5
+EMP002,S006,5
+EMP002,S007,4
+EMP002,S016,4
+EMP002,S017,5
+EMP003,S019,5
+EMP003,S020,5
+EMP003,S006,4
+EMP003,S011,4
+
+# INSTRUKSI PENGISIAN:
+#
+# KOLOM WAJIB (Required):
+# - employee_id: ID karyawan (harus sama dengan di TEMPLATE_EMPLOYEE_DATA.csv)
+# - skill_id: ID skill (harus sama dengan di TEMPLATE_SKILLS.csv)
+# - proficiency: Tingkat kemahiran (1-5)
+#
+# PROFICIENCY LEVEL:
+# - 1: Beginner (pemula, baru belajar)
+# - 2: Elementary (dasar, bisa dengan bimbingan)
+# - 3: Intermediate (menengah, bisa mandiri)
+# - 4: Advanced (mahir, bisa mengajar)
+# - 5: Expert (ahli, master level)
+#
+# CARA MENGISI:
+# 1. Untuk setiap karyawan, list semua skill yang dimiliki
+# 2. Beri proficiency level yang sesuai
+# 3. Satu karyawan bisa punya banyak skills (5-15 skills per karyawan ideal)
+#
+# CONTOH MAPPING:
+# 
+# Junior Staff (2-3 tahun):
+# - 5-8 skills
+# - Proficiency: mostly 2-3, beberapa 4
+#
+# Mid Staff (3-5 tahun):
+# - 7-10 skills
+# - Proficiency: mostly 3-4, beberapa 5
+#
+# Senior Staff (5-8 tahun):
+# - 10-12 skills
+# - Proficiency: mostly 4-5
+#
+# Supervisor/Manager (8+ tahun):
+# - 12-15 skills
+# - Proficiency: mostly 4-5, termasuk leadership skills
+#
+# TIPS:
+# 1. Setiap karyawan minimal punya 5 skills
+# 2. Balance antara technical dan soft skills
+# 3. Semakin senior, semakin banyak leadership skills
+# 4. Proficiency harus realistis (jangan semua 5)
+# 5. Gunakan data dari performance review atau self-assessment
+#
+# CARA CEPAT GENERATE:
+# Jika tidak ada data skill detail, gunakan aturan berikut:
+# - Performance score 90-100: proficiency rata-rata 4-5
+# - Performance score 80-90: proficiency rata-rata 3-4
+# - Performance score 70-80: proficiency rata-rata 2-3
+# - Performance score <70: proficiency rata-rata 1-2
+#
+# MINIMUM DATA:
+# - Setiap karyawan minimal 5 skills
+# - Total rows = jumlah karyawan × rata-rata skills per karyawan
+# - Contoh: 100 karyawan × 8 skills = 800 rows

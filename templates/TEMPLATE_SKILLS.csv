@@ -1,0 +1,87 @@
+skill_id,skill_name,category,importance,description
+S001,Python Programming,Technical,5,Programming language proficiency
+S002,Data Analysis,Technical,5,Ability to analyze and interpret data
+S003,SQL Database,Technical,4,Database management and querying
+S004,Machine Learning,Technical,4,ML algorithms and implementation
+S005,Web Development,Technical,3,Frontend and backend development
+S006,Communication,Soft,5,Verbal and written communication skills
+S007,Teamwork,Soft,5,Ability to work effectively in teams
+S008,Problem Solving,Soft,5,Analytical and creative problem solving
+S009,Time Management,Soft,4,Ability to prioritize and manage time
+S010,Adaptability,Soft,4,Flexibility and openness to change
+S011,Team Leadership,Leadership,5,Ability to lead and motivate teams
+S012,Strategic Thinking,Leadership,5,Long-term planning and vision
+S013,Decision Making,Leadership,5,Effective decision making under pressure
+S014,Mentoring,Leadership,4,Coaching and developing others
+S015,Project Management,Leadership,5,Planning and executing projects
+S016,Recruitment,Domain-HR,5,Talent acquisition and hiring
+S017,Employee Relations,Domain-HR,5,Managing employee relationships
+S018,Performance Appraisal,Domain-HR,4,Conducting performance reviews
+S019,Financial Analysis,Domain-Finance,5,Financial modeling and analysis
+S020,Accounting,Domain-Finance,5,Bookkeeping and financial reporting
+
+# INSTRUKSI PENGISIAN:
+#
+# KOLOM WAJIB (Required):
+# - skill_id: ID unik skill (contoh: S001, S002, dst)
+# - skill_name: Nama skill/kompetensi
+# - category: Kategori skill (Technical/Soft/Leadership/Domain-XX)
+# - importance: Tingkat kepentingan (1-5, dimana 5 = sangat penting)
+# - description: Deskripsi skill (opsional)
+#
+# KATEGORI SKILL:
+# 1. Technical: Keahlian teknis spesifik
+#    Contoh: Programming, Data Analysis, Tools, Software
+#
+# 2. Soft: Soft skills / interpersonal skills
+#    Contoh: Communication, Teamwork, Problem Solving, Time Management
+#
+# 3. Leadership: Kompetensi kepemimpinan
+#    Contoh: Team Leadership, Strategic Thinking, Decision Making
+#
+# 4. Domain-XX: Keahlian spesifik domain (ganti XX dengan nama domain)
+#    Contoh: Domain-HR, Domain-Finance, Domain-Operations, Domain-Sales
+#
+# IMPORTANCE LEVEL:
+# - 5: Critical (wajib untuk posisi)
+# - 4: Very Important (sangat dibutuhkan)
+# - 3: Important (penting tapi bisa dipelajari)
+# - 2: Nice to Have (nilai tambah)
+# - 1: Optional (opsional)
+#
+# TIPS:
+# 1. Buat skill yang relevan dengan industri/organisasi Anda
+# 2. Minimal 30-50 skills untuk coverage yang baik
+# 3. Balance antara Technical, Soft, dan Leadership skills
+# 4. Gunakan nama skill yang jelas dan spesifik
+# 5. Importance level akan mempengaruhi job matching
+#
+# CONTOH SKILLS PER KATEGORI:
+#
+# Technical (IT):
+# - Programming Languages (Python, Java, JavaScript)
+# - Databases (SQL, NoSQL, MongoDB)
+# - Cloud (AWS, Azure, GCP)
+# - DevOps (Docker, Kubernetes, CI/CD)
+#
+# Technical (Finance):
+# - Financial Modeling
+# - Excel Advanced
+# - SAP/ERP Systems
+# - Tax Management
+#
+# Soft Skills:
+# - Communication
+# - Teamwork
+# - Problem Solving
+# - Critical Thinking
+# - Emotional Intelligence
+# - Conflict Resolution
+#
+# Leadership:
+# - Team Leadership
+# - Strategic Planning
+# - Change Management
+# - Performance Management
+# - Budget Management
+# - Stakeholder Management

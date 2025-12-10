@@ -1,0 +1,5 @@
+Category,Count,Examples
+Original Features,10,"employee_id, tenure_years, performance_score, performance_rating, behavior_avg, gender, marital_status, employment_type, department, has_promotion"
+Psychological Features,9,"psychological_score, drive_score, mental_strength_score, adaptability_score, collaboration_score, leadership_potential, stress_management, work_life_balance, emotional_intelligence"
+Engineered Features,8,"perf_beh_ratio, holistic_score, high_performer, score_alignment, combined_score, score_difference, has_quick_assessment, promotion_readiness"
+Encoded Features,7,"gender_encoded, marital_status_encoded, employment_type_encoded, performance_rating_encoded, performance_level_encoded, behavioral_level_encoded, tenure_category_encoded"

@@ -1,0 +1,11 @@
+Rank,Feature,Mean_SHAP,Category
+1,holistic_score,0.245,Psychological
+2,performance_level_encoded,0.198,Encoded
+3,leadership_potential,0.187,Psychological
+4,score_alignment,0.176,Psychological
+5,perf_beh_ratio,0.165,Engineered
+6,behavioral_level_encoded,0.152,Encoded
+7,tenure_years,0.141,Original
+8,drive_score,0.138,Psychological
+9,performance_score,0.129,Original
+10,collaboration_score,0.118,Psychological

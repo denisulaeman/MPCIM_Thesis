@@ -1,0 +1,6 @@
+Feature,RF_Rank,XGB_Rank,SHAP_Rank,Average_Rank
+holistic_score,1,1,1,1.0
+performance_level_encoded,2,3,2,2.3
+leadership_potential,4,2,3,3.0
+score_alignment,3,5,4,4.0
+perf_beh_ratio,5,4,5,4.7

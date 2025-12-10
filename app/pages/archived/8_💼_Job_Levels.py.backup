@@ -1,0 +1,348 @@
+"""
+Job Levels Browser Page
+===========================
+Browse all job levels and view top candidates with spider charts
+"""
+
+import streamlit as st
+import sys
+from pathlib import Path
+import pandas as pd
+
+# Add parent directory to path
+repo_root = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(repo_root))
+
+from app.services.job_matching_service import get_job_matching_service
+from app.visualizations.spider_chart import (
+    create_spider_chart,
+    create_comparison_spider_chart,
+    create_skill_proficiency_chart,
+    get_strength_weakness_analysis
+)
+
+# Page config
+st.set_page_config(
+    page_title="Job Levels - MPCIM",
+    page_icon="💼",
+    layout="wide"
+)
+
+# Custom CSS
+st.markdown("""
+<style>
+    .main-header {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 0.5rem;
+    }
+    .sub-header {
+        font-size: 1.1rem;
+        color: #718096;
+        margin-bottom: 2rem;
+    }
+    .job-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 1rem;
+    }
+    .job-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+    }
+    .job-meta {
+        color: #718096;
+        font-size: 0.9rem;
+    }
+    .candidate-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1rem;
+        border-radius: 8px;
+        color: white;
+        margin-bottom: 0.5rem;
+    }
+    .medal {
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Header
+st.markdown('<div class="main-header">💼 Job Levels Browser</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-header">Explore job levels and discover top talent with multi-dimensional analysis</div>', unsafe_allow_html=True)
+
+# Load service
+@st.cache_resource
+def load_service():
+    return get_job_matching_service()
+
+service = load_service()
+
+if not service.graph:
+    st.error("⚠️ Knowledge Graph not loaded. Please run build_graph.py first.")
+    st.stop()
+
+# Get all jobs
+all_jobs = service.get_all_jobs()
+
+if not all_jobs:
+    st.warning("No jobs found in the graph.")
+    st.stop()
+
+# Sidebar filters
+with st.sidebar:
+    st.markdown("### 🎯 Filters")
+    
+    # Department filter
+    departments = sorted(list(set(job['department'] for job in all_jobs)))
+    selected_dept = st.selectbox(
+        "Department",
+        options=["All"] + departments,
+        key="dept_filter"
+    )
+    
+    # Level filter
+    levels = sorted(list(set(job['level'] for job in all_jobs)))
+    selected_level = st.selectbox(
+        "Level",
+        options=["All"] + levels,
+        key="level_filter"
+    )
+    
+    # Minimum candidates filter
+    min_candidates = st.slider(
+        "Min Qualified Candidates",
+        min_value=0,
+        max_value=100,
+        value=0,
+        step=10,
+        key="min_cand"
+    )
+    
+    st.markdown("---")
+    st.markdown("### 📊 Statistics")
+    st.metric("Total Positions", len(all_jobs))
+    st.metric("Departments", len(departments))
+    st.metric("Levels", len(levels))
+
+# Filter jobs
+filtered_jobs = all_jobs
+
+if selected_dept != "All":
+    filtered_jobs = [j for j in filtered_jobs if j['department'] == selected_dept]
+
+if selected_level != "All":
+    filtered_jobs = [j for j in filtered_jobs if j['level'] == selected_level]
+
+filtered_jobs = [j for j in filtered_jobs if j['qualified_candidates'] >= min_candidates]
+
+# Sort by qualified candidates
+filtered_jobs.sort(key=lambda x: x['qualified_candidates'], reverse=True)
+
+# Main content
+st.markdown(f"### 📋 Showing {len(filtered_jobs)} Position(s)")
+
+# Tabs
+tab1, tab2 = st.tabs(["📋 All Positions", "🔍 Position Detail"])
+
+# ============================================================================
+# TAB 1: ALL POSITIONS
+# ============================================================================
+with tab1:
+    if not filtered_jobs:
+        st.info("No positions match the selected filters.")
+    else:
+        # Display jobs as cards
+        for job in filtered_jobs:
+            with st.container():
+                st.markdown(f"""
+                <div class="job-card">
+                    <div class="job-title">{job['job_title']}</div>
+                    <div class="job-meta">
+                        📍 {job['department']} • 
+                        📊 {job['level'].title()} • 
+                        👥 {job['qualified_candidates']} qualified candidates
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                col1, col2, col3, col4, col5 = st.columns([2, 1, 1, 1, 1])
+                
+                with col1:
+                    if st.button(f"View Details", key=f"view_{job['job_id']}", use_container_width=True):
+                        st.session_state['selected_job'] = job['job_id']
+                        st.rerun()
+                
+                with col2:
+                    st.caption(f"Perf: {job['min_performance']:.0f}")
+                
+                with col3:
+                    st.caption(f"Beh: {job['min_behavior']:.0f}")
+                
+                with col4:
+                    st.caption(f"Psych: {job['min_psychological']:.0f}")
+                
+                with col5:
+                    st.caption(f"Lead: {job['min_leadership']:.0f}")
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+
+# ============================================================================
+# TAB 2: POSITION DETAIL
+# ============================================================================
+with tab2:
+    # Job selector
+    job_options = {f"{job['job_title']} ({job['department']})": job['job_id'] for job in filtered_jobs}
+    
+    if not job_options:
+        st.info("No positions to display. Adjust filters in sidebar.")
+    else:
+        # Check if job selected from tab1
+        if 'selected_job' in st.session_state and st.session_state['selected_job'] in [j['job_id'] for j in filtered_jobs]:
+            default_job = next((k for k, v in job_options.items() if v == st.session_state['selected_job']), list(job_options.keys())[0])
+        else:
+            default_job = list(job_options.keys())[0]
+        
+        selected_job_label = st.selectbox(
+            "Select Position",
+            options=list(job_options.keys()),
+            index=list(job_options.keys()).index(default_job) if default_job in job_options.keys() else 0,
+            key="job_detail_select"
+        )
+        
+        selected_job_id = job_options[selected_job_label]
+        job_details = next((j for j in all_jobs if j['job_id'] == selected_job_id), None)
+        
+        if job_details:
+            # Job header
+            st.markdown(f"## {job_details['job_title']}")
+            st.caption(f"📍 {job_details['department']} • 📊 {job_details['level'].title()}")
+            
+            st.markdown("---")
+            
+            # Requirements
+            st.markdown("### 📋 Position Requirements")
+            
+            col1, col2, col3, col4 = st.columns(4)
+            
+            with col1:
+                st.metric("Performance", f"{job_details['min_performance']:.0f}")
+            with col2:
+                st.metric("Behavioral", f"{job_details['min_behavior']:.0f}")
+            with col3:
+                st.metric("Psychological", f"{job_details['min_psychological']:.0f}")
+            with col4:
+                st.metric("Leadership", f"{job_details['min_leadership']:.0f}")
+            
+            st.markdown("---")
+            
+            # Top candidates
+            st.markdown("### 🏆 Top 5 Candidates")
+            
+            top_candidates = service.get_top_candidates(selected_job_id, top_n=5)
+            
+            if not top_candidates:
+                st.info("No qualified candidates found for this position.")
+            else:
+                # Display candidates
+                for rank, candidate in enumerate(top_candidates, 1):
+                    medal = "🥇" if rank == 1 else "🥈" if rank == 2 else "🥉" if rank == 3 else f"#{rank}"
+                    
+                    with st.expander(f"{medal} {candidate['name']} - Match: {candidate['match_score']:.1f}%", expanded=(rank == 1)):
+                        # Candidate metrics
+                        col1, col2, col3, col4, col5 = st.columns(5)
+                        
+                        with col1:
+                            st.metric("Match Score", f"{candidate['match_score']:.1f}%")
+                        with col2:
+                            st.metric("Performance", f"{candidate['performance_score']:.1f}")
+                        with col3:
+                            st.metric("Behavior", f"{candidate['behavior_avg']:.1f}")
+                        with col4:
+                            st.metric("Psychological", f"{candidate['psychological_score']:.1f}")
+                        with col5:
+                            st.metric("Tenure", f"{candidate['tenure_years']:.0f}y")
+                        
+                        # Match breakdown
+                        st.markdown("#### 📊 Match Breakdown")
+                        
+                        col1, col2, col3, col4 = st.columns(4)
+                        
+                        with col1:
+                            st.progress(candidate['perf_match'] / 100)
+                            st.caption(f"Performance: {candidate['perf_match']:.1f}%")
+                        
+                        with col2:
+                            st.progress(candidate['beh_match'] / 100)
+                            st.caption(f"Behavioral: {candidate['beh_match']:.1f}%")
+                        
+                        with col3:
+                            st.progress(candidate['psych_match'] / 100)
+                            st.caption(f"Psychological: {candidate['psych_match']:.1f}%")
+                        
+                        with col4:
+                            st.progress(candidate['skill_match'] / 100)
+                            st.caption(f"Skills: {candidate['skill_match']:.1f}%")
+                        
+                        # Spider chart
+                        st.markdown("#### 🕸️ Competency Profile")
+                        
+                        profile = service.get_employee_profile(candidate['employee_id'])
+                        
+                        if profile:
+                            # Create spider chart with job overlay
+                            fig = create_spider_chart(
+                                profile,
+                                job_requirements=job_details,
+                                title=f"{candidate['name']} vs {job_details['job_title']} Requirements",
+                                show_job_overlay=True
+                            )
+                            
+                            st.plotly_chart(fig, use_container_width=True)
+                            
+                            # Strength/Weakness analysis
+                            analysis = get_strength_weakness_analysis(profile)
+                            
+                            col1, col2 = st.columns(2)
+                            
+                            with col1:
+                                st.markdown("**✅ Strengths:**")
+                                for strength in analysis['strengths']:
+                                    st.success(f"{strength['dimension']}: {strength['score']:.1f}")
+                            
+                            with col2:
+                                st.markdown("**⚠️ Areas for Development:**")
+                                for weakness in analysis['weaknesses']:
+                                    st.warning(f"{weakness['dimension']}: {weakness['score']:.1f}")
+                            
+                            st.info(f"**Overall**: {analysis['overall_assessment']} • **Balance**: {analysis['balance_assessment']}")
+                
+                # Comparison chart
+                if len(top_candidates) > 1:
+                    st.markdown("---")
+                    st.markdown("### 📊 Top Candidates Comparison")
+                    
+                    # Get profiles for top 3
+                    profiles = []
+                    for cand in top_candidates[:3]:
+                        profile = service.get_employee_profile(cand['employee_id'])
+                        if profile:
+                            profiles.append(profile)
+                    
+                    if profiles:
+                        fig = create_comparison_spider_chart(
+                            profiles,
+                            title="Top 3 Candidates Comparison"
+                        )
+                        st.plotly_chart(fig, use_container_width=True)
+
+# Footer
+st.markdown("---")
+st.caption("MPCIM Job Levels Browser • Multi-Dimensional Talent Matching • © 2025")

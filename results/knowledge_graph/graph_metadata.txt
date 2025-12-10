@@ -1,0 +1,20 @@
+MPCIM Knowledge Graph Metadata
+==================================================
+
+Created: 2025-12-08T17:33:35.133794
+
+Total Nodes: 1,072
+Total Edges: 28,424
+Average Degree: 53.03
+
+Nodes by Type:
+  • department: 4
+  • employee: 1,000
+  • job: 23
+  • skill: 45
+
+Edges by Type:
+  • BELONGS_TO: 23
+  • HAS_SKILL: 9,959
+  • QUALIFIED_FOR: 18,152
+  • REQUIRES_SKILL: 290

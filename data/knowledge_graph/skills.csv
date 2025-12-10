@@ -1,0 +1,46 @@
+skill_id,skill_name,category,importance
+S001,Python Programming,Technical,5
+S002,Data Analysis,Technical,5
+S003,SQL Database,Technical,4
+S004,Machine Learning,Technical,4
+S005,Web Development,Technical,3
+S006,Cloud Computing,Technical,4
+S007,DevOps,Technical,3
+S008,Cybersecurity,Technical,4
+S009,Network Administration,Technical,3
+S010,System Design,Technical,4
+S011,API Development,Technical,3
+S012,Mobile Development,Technical,3
+S013,Data Visualization,Technical,3
+S014,Excel Advanced,Technical,4
+S015,ERP Systems,Technical,4
+S016,Business Intelligence,Technical,4
+S017,Statistical Analysis,Technical,4
+S018,Financial Modeling,Technical,5
+S019,Accounting Software,Technical,4
+S020,Process Automation,Technical,3
+S021,Communication,Soft,5
+S022,Teamwork,Soft,5
+S023,Problem Solving,Soft,5
+S024,Critical Thinking,Soft,5
+S025,Time Management,Soft,4
+S026,Adaptability,Soft,4
+S027,Creativity,Soft,3
+S028,Emotional Intelligence,Soft,4
+S029,Conflict Resolution,Soft,4
+S030,Presentation Skills,Soft,4
+S031,Negotiation,Soft,4
+S032,Customer Service,Soft,3
+S033,Attention to Detail,Soft,4
+S034,Work Ethics,Soft,5
+S035,Stress Management,Soft,3
+S036,Team Leadership,Leadership,5
+S037,Strategic Thinking,Leadership,5
+S038,Decision Making,Leadership,5
+S039,Change Management,Leadership,4
+S040,Mentoring & Coaching,Leadership,4
+S041,Project Management,Leadership,5
+S042,Budget Management,Leadership,4
+S043,Stakeholder Management,Leadership,5
+S044,Performance Management,Leadership,4
+S045,Vision Setting,Leadership,5

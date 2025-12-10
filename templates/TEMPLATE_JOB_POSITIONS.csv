@@ -1,0 +1,92 @@
+job_id,job_title,department,level,min_performance,min_behavior,min_psychological,min_leadership,min_tenure,max_tenure,description
+L001,Non Staff,IT,Non Staff,50,50,50,40,0,2,Entry level position - learning phase
+L002,Non Staff,HR,Non Staff,50,55,50,40,0,2,Entry level position - learning phase
+L003,Non Staff,Finance,Non Staff,50,50,50,40,0,2,Entry level position - learning phase
+L004,Officer,IT,Officer,65,65,60,55,1,4,Officer level - independent contributor
+L005,Officer,HR,Officer,65,70,60,55,1,4,Officer level - independent contributor
+L006,Officer,Finance,Officer,70,65,60,55,1,4,Officer level - independent contributor
+L007,Officer,Operations,Officer,65,68,60,55,1,4,Officer level - independent contributor
+L008,Senior Officer,IT,Senior Officer,75,75,70,65,3,7,Senior level with mentoring responsibilities
+L009,Senior Officer,HR,Senior Officer,75,78,70,65,3,7,Senior level with mentoring responsibilities
+L010,Senior Officer,Finance,Senior Officer,78,75,70,65,3,7,Senior level with mentoring responsibilities
+L011,Senior Officer,Operations,Senior Officer,75,77,70,65,3,7,Senior level with mentoring responsibilities
+L012,Manager,IT,Manager,85,82,78,75,5,10,Management position with team leadership
+L013,Manager,HR,Manager,85,85,78,75,5,10,Management position with team leadership
+L014,Manager,Finance,Manager,88,82,78,75,5,10,Management position with team leadership
+L015,Manager,Operations,Manager,85,83,78,75,5,10,Management position with team leadership
+L016,Senior Manager,IT,Senior Manager,90,88,85,82,8,15,Senior management with strategic responsibilities
+L017,Senior Manager,HR,Senior Manager,90,90,85,82,8,15,Senior management with strategic responsibilities
+L018,Senior Manager,Finance,Senior Manager,92,88,85,82,8,15,Senior management with strategic responsibilities
+L019,Senior Manager,Operations,Senior Manager,90,89,85,82,8,15,Senior management with strategic responsibilities
+L020,Direktur,IT,Direktur,95,92,90,90,10,25,Executive leadership position
+L021,Direktur,HR,Direktur,95,95,90,90,10,25,Executive leadership position
+L022,Direktur,Finance,Direktur,95,92,90,90,10,25,Executive leadership position
+L023,Direktur,Operations,Direktur,95,93,90,90,10,25,Executive leadership position
+
+# INSTRUKSI PENGISIAN:
+#
+# KOLOM WAJIB (Required):
+# - job_id: ID unik jabatan (contoh: J001, J002, dst)
+# - job_title: Nama jabatan (contoh: Manager, Supervisor, Staff)
+# - department: Departemen (IT, HR, Finance, Operations, dll)
+# - level: Level jabatan (junior/mid/senior/supervisor/manager)
+# - min_performance: Minimum skor performa yang dibutuhkan (0-100)
+# - min_behavior: Minimum skor perilaku yang dibutuhkan (0-100)
+# - min_psychological: Minimum skor psikologi yang dibutuhkan (0-100)
+# - min_leadership: Minimum potensi kepemimpinan yang dibutuhkan (0-100)
+# - min_tenure: Minimum lama bekerja (tahun)
+# - max_tenure: Maksimum lama bekerja (tahun, untuk career path)
+# - description: Deskripsi jabatan (opsional)
+#
+# PANDUAN LEVEL (NEW STRUCTURE):
+# - Non Staff: Entry level, learning phase (0-2 tahun)
+# - Officer: Independent contributor (1-4 tahun)
+# - Senior Officer: Senior level with mentoring (3-7 tahun)
+# - Manager: Team leadership & management (5-10 tahun)
+# - Senior Manager: Strategic management (8-15 tahun)
+# - Direktur: Executive leadership (10-25 tahun)
+#
+# PANDUAN MINIMUM SCORES (NEW STRUCTURE):
+# 
+# Non Staff:
+#   - Performance: 50-60
+#   - Behavior: 50-60
+#   - Psychological: 50-55
+#   - Leadership: 40-50
+#
+# Officer:
+#   - Performance: 65-75
+#   - Behavior: 65-70
+#   - Psychological: 60-65
+#   - Leadership: 55-60
+#
+# Senior Officer:
+#   - Performance: 75-80
+#   - Behavior: 75-78
+#   - Psychological: 70-75
+#   - Leadership: 65-70
+#
+# Manager:
+#   - Performance: 85-90
+#   - Behavior: 82-85
+#   - Psychological: 78-82
+#   - Leadership: 75-80
+#
+# Senior Manager:
+#   - Performance: 90-93
+#   - Behavior: 88-90
+#   - Psychological: 85-88
+#   - Leadership: 82-85
+#
+# Direktur:
+#   - Performance: 95+
+#   - Behavior: 92-95
+#   - Psychological: 90+
+#   - Leadership: 90+
+#
+# TIPS:
+# 1. Sesuaikan dengan struktur organisasi Anda
+# 2. Career path: Non Staff → Officer → Senior Officer → Manager → Senior Manager → Direktur
+# 3. Min scores harus realistis (jangan terlalu tinggi atau rendah)
+# 4. Tenure range harus overlap untuk memungkinkan career progression
+# 5. Minimal buat 15-25 posisi untuk hasil optimal (6 levels × 4 departments)

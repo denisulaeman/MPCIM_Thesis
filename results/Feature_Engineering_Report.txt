@@ -3,8 +3,8 @@ MPCIM THESIS - FEATURE ENGINEERING SUMMARY
 ================================================================================
 
 1. OUTLIER HANDLING:
-   Performance outliers: 46 capped
-   Behavioral outliers: 35 capped
+   Performance outliers: 96 capped
+   Behavioral outliers: 20 capped
 
 2. NEW FEATURES CREATED:
    - perf_beh_ratio: Performance/Behavioral ratio
@@ -20,25 +20,25 @@ MPCIM THESIS - FEATURE ENGINEERING SUMMARY
 
 4. FEATURE SCALING:
    Method: StandardScaler (mean=0, std=1)
-   Features scaled: 14
+   Features scaled: 23
 
 5. TRAIN/TEST SPLIT:
-   Training: 569 samples (80%)
-   Test: 143 samples (20%)
+   Training: 800 samples (80%)
+   Test: 200 samples (20%)
    Stratified: Yes
 
 6. CLASS IMBALANCE HANDLING:
    Method: SMOTE
-   Before: 53 promoted samples
-   After: 516 promoted samples
-   Synthetic samples: 463
+   Before: 560 promoted samples
+   After: 560 promoted samples
+   Synthetic samples: 320
 
 7. TOP FEATURES BY CORRELATION:
-   combined_score: 0.124
-   performance_score: 0.109
-   behavior_avg: 0.078
-   score_difference: 0.072
-   perf_beh_ratio: 0.070
+   psychological_score: 0.297
+   leadership_potential: 0.296
+   drive_score: 0.295
+   adaptability_score: 0.291
+   mental_strength_score: 0.283
 
 8. FILES SAVED:
    - full_dataset_processed.csv

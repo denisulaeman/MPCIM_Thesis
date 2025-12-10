@@ -1,0 +1,62 @@
+{
+  "Non Staff": {
+    "order": 1,
+    "min_tenure": 0,
+    "max_tenure": 2,
+    "min_performance": 50,
+    "min_behavior": 50,
+    "min_psychological": 50,
+    "min_leadership": 40,
+    "description": "Entry level - learning phase"
+  },
+  "Officer": {
+    "order": 2,
+    "min_tenure": 1,
+    "max_tenure": 4,
+    "min_performance": 65,
+    "min_behavior": 65,
+    "min_psychological": 60,
+    "min_leadership": 55,
+    "description": "Independent contributor"
+  },
+  "Senior Officer": {
+    "order": 3,
+    "min_tenure": 3,
+    "max_tenure": 7,
+    "min_performance": 75,
+    "min_behavior": 75,
+    "min_psychological": 70,
+    "min_leadership": 65,
+    "description": "Senior level with mentoring"
+  },
+  "Manager": {
+    "order": 4,
+    "min_tenure": 5,
+    "max_tenure": 10,
+    "min_performance": 85,
+    "min_behavior": 82,
+    "min_psychological": 78,
+    "min_leadership": 75,
+    "description": "Team leadership & management"
+  },
+  "Senior Manager": {
+    "order": 5,
+    "min_tenure": 8,
+    "max_tenure": 15,
+    "min_performance": 90,
+    "min_behavior": 88,
+    "min_psychological": 85,
+    "min_leadership": 82,
+    "description": "Strategic management"
+  },
+  "Direktur": {
+    "order": 6,
+    "min_tenure": 10,
+    "max_tenure": 25,
+    "min_performance": 95,
+    "min_behavior": 92,
+    "min_psychological": 90,
+    "min_leadership": 90,
+    "description": "Executive leadership"
+  }
+}

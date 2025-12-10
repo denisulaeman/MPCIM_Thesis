@@ -1,0 +1,24 @@
+job_id,job_title,department,level,min_performance,min_behavior,min_psychological,min_leadership,min_tenure,max_tenure
+L001,Non Staff,IT,Non Staff,50,50,50,40,0,2
+L002,Non Staff,HR,Non Staff,50,55,50,40,0,2
+L003,Non Staff,Finance,Non Staff,50,50,50,40,0,2
+L004,Officer,IT,Officer,65,65,60,55,1,4
+L005,Officer,HR,Officer,65,70,60,55,1,4
+L006,Officer,Finance,Officer,70,65,60,55,1,4
+L007,Officer,Operations,Officer,65,68,60,55,1,4
+L008,Senior Officer,IT,Senior Officer,75,75,70,65,3,7
+L009,Senior Officer,HR,Senior Officer,75,78,70,65,3,7
+L010,Senior Officer,Finance,Senior Officer,78,75,70,65,3,7
+L011,Senior Officer,Operations,Senior Officer,75,77,70,65,3,7
+L012,Manager,IT,Manager,85,82,78,75,5,10
+L013,Manager,HR,Manager,85,85,78,75,5,10
+L014,Manager,Finance,Manager,88,82,78,75,5,10
+L015,Manager,Operations,Manager,85,83,78,75,5,10
+L016,Senior Manager,IT,Senior Manager,90,88,85,82,8,15
+L017,Senior Manager,HR,Senior Manager,90,90,85,82,8,15
+L018,Senior Manager,Finance,Senior Manager,92,88,85,82,8,15
+L019,Senior Manager,Operations,Senior Manager,90,89,85,82,8,15
+L020,Direktur,IT,Direktur,95,92,90,90,10,25
+L021,Direktur,HR,Direktur,95,95,90,90,10,25
+L022,Direktur,Finance,Direktur,95,92,90,90,10,25
+L023,Direktur,Operations,Direktur,95,93,90,90,10,25

@@ -1,0 +1,29 @@
+# Core Data Science Libraries
+pandas>=1.5.0
+numpy>=1.23.0
+
+# Machine Learning
+scikit-learn>=1.2.0
+joblib>=1.2.0
+
+# Visualization
+matplotlib>=3.6.0
+seaborn>=0.12.0
+
+# Optional: Advanced ML (uncomment if needed)
+# xgboost>=1.7.0
+# lightgbm>=3.3.0
+# imbalanced-learn>=0.10.0  # For SMOTE
+
+# Optional: Model Interpretation (uncomment if needed)
+# shap>=0.41.0
+# lime>=0.2.0
+
+# Optional: Hyperparameter Tuning (uncomment if needed)
+# optuna>=3.0.0
+
+# Optional: Progress Bars (uncomment if needed)
+# tqdm>=4.64.0
+
+# AI Integration (Gemini)
+google-generativeai>=0.3.0

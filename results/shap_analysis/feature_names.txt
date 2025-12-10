@@ -1,0 +1,14 @@
+tenure_years
+performance_score
+behavior_avg
+perf_beh_ratio
+combined_score
+score_difference
+high_performer
+gender_encoded
+marital_status_encoded
+is_permanent_encoded
+tenure_category_encoded
+performance_level_encoded
+behavioral_level_encoded
+performance_rating_encoded

@@ -1,0 +1,366 @@
+"""
+Knowledge Graph Explorer Page
+==============================
+Interactive exploration of MPCIM Knowledge Graph
+"""
+
+import streamlit as st
+import sys
+from pathlib import Path
+
+# Add parent directory to path
+repo_root = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(repo_root))
+
+from app.services.job_matching_service import get_job_matching_service
+from app.visualizations.knowledge_graph_viz import create_interactive_graph, create_job_focused_graph
+import streamlit.components.v1 as components
+
+# Page config
+st.set_page_config(
+    page_title="Knowledge Graph - MPCIM",
+    page_icon="🗺️",
+    layout="wide"
+)
+
+# Custom CSS
+st.markdown("""
+<style>
+    .main-header {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 0.5rem;
+    }
+    .sub-header {
+        font-size: 1.1rem;
+        color: #718096;
+        margin-bottom: 2rem;
+    }
+    .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1.5rem;
+        border-radius: 10px;
+        color: white;
+        text-align: center;
+    }
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Header
+st.markdown('<div class="main-header">🗺️ Knowledge Graph Explorer</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-header">Interactive visualization of Employee-Job-Skill relationships</div>', unsafe_allow_html=True)
+
+# Load service
+@st.cache_resource
+def load_service():
+    return get_job_matching_service()
+
+service = load_service()
+
+if not service.graph:
+    st.error("⚠️ Knowledge Graph not loaded. Please run build_graph.py first.")
+    st.stop()
+
+# Get statistics
+stats = service.get_statistics()
+
+# Statistics cards
+st.markdown("### 📊 Graph Statistics")
+col1, col2, col3, col4, col5 = st.columns(5)
+
+with col1:
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-number">{stats.get('total_nodes', 0):,}</div>
+        <div class="stat-label">Total Nodes</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <div class="stat-number">{stats.get('employees', 0):,}</div>
+        <div class="stat-label">Employees</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f"""
+    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <div class="stat-number">{stats.get('jobs', 0)}</div>
+        <div class="stat-label">Job Levels</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    st.markdown(f"""
+    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+        <div class="stat-number">{stats.get('skills', 0)}</div>
+        <div class="stat-label">Skills</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col5:
+    st.markdown(f"""
+    <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+        <div class="stat-number">{stats.get('qualified_matches', 0):,}</div>
+        <div class="stat-label">Qualified Matches</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Tabs
+tab1, tab2, tab3 = st.tabs(["🌐 Full Graph", "💼 Job-Focused View", "📖 Guide"])
+
+# ============================================================================
+# TAB 1: FULL GRAPH
+# ============================================================================
+with tab1:
+    st.markdown("### 🌐 Interactive Knowledge Graph")
+    st.caption("Explore the complete network of employees, jobs, and skills")
+    
+    # Filters
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        # Get all departments
+        departments = set()
+        for node_id in service.graph.nodes():
+            node_data = service.graph.nodes[node_id]
+            if node_data.get('node_type') == 'job':
+                departments.add(node_data.get('department', 'Unknown'))
+        
+        department_filter = st.selectbox(
+            "Filter by Department",
+            options=["All"] + sorted(list(departments)),
+            key="dept_filter"
+        )
+    
+    with col2:
+        show_employees = st.checkbox("Show Employees", value=True, key="show_emp")
+    
+    with col3:
+        max_employees = st.slider(
+            "Max Employees to Display",
+            min_value=10,
+            max_value=100,
+            value=50,
+            step=10,
+            key="max_emp"
+        )
+    
+    # Generate graph
+    with st.spinner("Generating interactive graph..."):
+        html = create_interactive_graph(
+            service.graph,
+            department_filter=department_filter if department_filter != "All" else None,
+            show_employees=show_employees,
+            show_jobs=True,
+            show_skills=True,
+            max_employees=max_employees,
+            height="700px"
+        )
+        
+        # Display graph
+        components.html(html, height=750, scrolling=True)
+    
+    # Legend
+    st.markdown("---")
+    st.markdown("### 📌 Legend")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("🔵 **Employee** - Purple circles")
+        st.caption("Size indicates importance")
+    
+    with col2:
+        st.markdown("🟢 **Job Level** - Green boxes")
+        st.caption("Hover for requirements")
+    
+    with col3:
+        st.markdown("🔺 **Skill** - Pink triangles")
+        st.caption("Hover for category")
+    
+    with col4:
+        st.markdown("⭐ **Department** - Yellow stars")
+        st.caption("Organizational units")
+
+# ============================================================================
+# TAB 2: JOB-FOCUSED VIEW
+# ============================================================================
+with tab2:
+    st.markdown("### 💼 Job-Focused Visualization")
+    st.caption("View top candidates for a specific position")
+    
+    # Get all jobs
+    all_jobs = service.get_all_jobs()
+    
+    if not all_jobs:
+        st.warning("No jobs found in the graph.")
+    else:
+        # Job selector
+        job_options = {f"{job['job_title']} ({job['department']})": job['job_id'] for job in all_jobs}
+        
+        selected_job_label = st.selectbox(
+            "Select Job Level",
+            options=list(job_options.keys()),
+            key="job_select"
+        )
+        
+        selected_job_id = job_options[selected_job_label]
+        
+        # Number of candidates
+        top_n = st.slider(
+            "Number of Top Candidates",
+            min_value=5,
+            max_value=20,
+            value=10,
+            step=1,
+            key="top_n"
+        )
+        
+        # Get job details
+        job_details = next((j for j in all_jobs if j['job_id'] == selected_job_id), None)
+        
+        if job_details:
+            # Job requirements
+            st.markdown("#### 📋 Position Requirements")
+            
+            col1, col2, col3, col4 = st.columns(4)
+            
+            with col1:
+                st.metric("Min Performance", f"{job_details['min_performance']:.0f}")
+            with col2:
+                st.metric("Min Behavior", f"{job_details['min_behavior']:.0f}")
+            with col3:
+                st.metric("Min Psychological", f"{job_details['min_psychological']:.0f}")
+            with col4:
+                st.metric("Qualified Candidates", job_details['qualified_candidates'])
+            
+            st.markdown("---")
+            
+            # Generate job-focused graph
+            with st.spinner("Generating job-focused graph..."):
+                html = create_job_focused_graph(
+                    service.graph,
+                    selected_job_id,
+                    top_n=top_n
+                )
+                
+                components.html(html, height=650, scrolling=True)
+            
+            # Top candidates table
+            st.markdown("#### 🏆 Top Candidates Details")
+            
+            top_candidates = service.get_top_candidates(selected_job_id, top_n=top_n)
+            
+            if top_candidates:
+                import pandas as pd
+                
+                df_candidates = pd.DataFrame([
+                    {
+                        'Rank': i+1,
+                        'Name': c['name'],
+                        'Match Score': f"{c['match_score']:.1f}%",
+                        'Performance': f"{c['performance_score']:.1f}",
+                        'Behavior': f"{c['behavior_avg']:.1f}",
+                        'Psychological': f"{c['psychological_score']:.1f}",
+                        'Leadership': f"{c['leadership_potential']:.1f}",
+                        'Tenure': f"{c['tenure_years']:.0f}y"
+                    }
+                    for i, c in enumerate(top_candidates)
+                ])
+                
+                st.dataframe(df_candidates, use_container_width=True, hide_index=True)
+            else:
+                st.info("No qualified candidates found for this position.")
+
+# ============================================================================
+# TAB 3: GUIDE
+# ============================================================================
+with tab3:
+    st.markdown("### 📖 How to Use Knowledge Graph")
+    
+    st.markdown("""
+    #### 🎯 What is a Knowledge Graph?
+    
+    A Knowledge Graph is a network of interconnected entities (nodes) and their relationships (edges).
+    In MPCIM, it represents:
+    - **Employees** and their skills, scores, and qualifications
+    - **Job Levels** and their requirements
+    - **Skills** and their importance
+    - **Relationships** between all these entities
+    
+    #### 🔍 How to Explore
+    
+    **Full Graph View**:
+    1. Use filters to focus on specific departments
+    2. Toggle employee visibility to reduce clutter
+    3. Adjust max employees to control graph size
+    4. **Hover** over nodes to see details
+    5. **Click and drag** to move nodes
+    6. **Scroll** to zoom in/out
+    
+    **Job-Focused View**:
+    1. Select a job level from the dropdown
+    2. View requirements and qualified candidates count
+    3. See top N candidates ranked by match score
+    4. Explore the focused graph showing job-candidate relationships
+    
+    #### 🎨 Visual Elements
+    
+    **Node Colors**:
+    - 🔵 Purple = Employees
+    - 🟢 Green = Job Levels
+    - 🔺 Pink = Skills
+    - ⭐ Yellow = Departments
+    
+    **Edge Colors & Thickness**:
+    - Darker/Thicker = Higher match score or proficiency
+    - Lighter/Thinner = Lower match score or proficiency
+    
+    **Node Sizes**:
+    - Larger nodes = More important or higher scores
+    - Smaller nodes = Less important or lower scores
+    
+    #### 💡 Use Cases
+    
+    1. **Talent Pool Visualization**: See all qualified candidates for a position
+    2. **Skill Gap Analysis**: Identify missing skills in the organization
+    3. **Career Path Planning**: Explore progression opportunities
+    4. **Succession Planning**: Find backup candidates for key positions
+    5. **Department Analysis**: Compare talent across departments
+    
+    #### 🚀 Tips
+    
+    - Start with **Job-Focused View** for specific insights
+    - Use **Full Graph** for exploratory analysis
+    - Filter by department to reduce complexity
+    - Hover over nodes for detailed information
+    - Take screenshots for presentations
+    
+    #### 📊 Metrics Explained
+    
+    - **Match Score**: Overall fit (0-100%) based on Performance (30%), Behavioral (25%), Psychological (25%), and Skills (20%)
+    - **Qualified Matches**: Number of employee-job pairs with match score ≥ 70%
+    - **Proficiency**: Skill level from 1 (beginner) to 5 (expert)
+    """)
+    
+    st.markdown("---")
+    st.info("💡 **Pro Tip**: Use this graph to identify high-potential employees and plan their career development!")
+
+# Footer
+st.markdown("---")
+st.caption("MPCIM Knowledge Graph • Built with NetworkX & Pyvis • © 2025")
