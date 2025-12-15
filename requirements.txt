@@ -8,6 +8,7 @@ joblib>=1.2.0
 
 # Network/Graph Analysis
 networkx>=3.0
+pyvis>=0.3.2
 
 # Visualization
 matplotlib>=3.6.0
