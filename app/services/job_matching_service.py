@@ -6,9 +6,16 @@ Service for querying Knowledge Graph and matching employees to jobs
 
 import pickle
 import pandas as pd
-import networkx as nx
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
+
+# Handle networkx import gracefully
+try:
+    import networkx as nx
+    NETWORKX_AVAILABLE = True
+except ImportError:
+    NETWORKX_AVAILABLE = False
+    nx = None
 
 class JobMatchingService:
     """Service for job matching using Knowledge Graph"""
