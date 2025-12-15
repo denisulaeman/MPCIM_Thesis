@@ -558,7 +558,7 @@ $$
 \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
 $$
 
-**Precision (Positive Predictive Value):**
+**Precision (Positive Predictive Value):**B
 
 $$
 \text{Precision} = \frac{TP}{TP + FP}
